@@ -14,3 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('login', function () {
+    return Socialite::driver('instagram')->scopes(['basic', 'public_content'])->redirect();
+});
+
+Route::get('me', function () {
+//    $user = Socialite::driver('instagram')->user();
+    return 'me';
+});
