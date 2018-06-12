@@ -34,13 +34,9 @@ class InstaController extends Controller
     public function handleProviderCallback(Request $request)
     {
         try {
-            // check if already has state in session
-            if (!$request->session()->get('state')) {
-                if ($request->get('state')) {
-                    $state = $request->get('state');
-                    $request->session()->put('state', $state);
-                }
-            }
+            $state = $request->get('state');
+            $request->session()->put('state', $state);
+            Socialite::driver('instagram')->user();
         } catch (\Exception $e) {
             return abort(401, 'Unauthorized');
         }
@@ -74,7 +70,7 @@ class InstaController extends Controller
                 'access_token' => $user->token
             ]);
         } catch (\Exception $e) {
-            return abort(404);
+            return 'error';
         }
 
         return $response->getBody();

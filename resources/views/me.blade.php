@@ -19,12 +19,15 @@
         </div>
     </div>
     <div>
-        <form action="{{ url('/search') }}" method="POST">
+        <form action="{{ url('search') }}" method="POST">
             {!! csrf_field() !!}
 
             <div class="form-row">
                 <div class="col-7">
                     <input type="text" class="form-control" name="keyword" placeholder="Keyword i.e. pru14">
+                    @if($errors->has('keyword'))
+                    <small class="form-text text-danger">{{ $errors->first('keyword') }}</small>
+                    @endif
                 </div>
                 <div class="col-auto">
                     <button type="submit" class="btn btn-primary mb-2">Submit</button>

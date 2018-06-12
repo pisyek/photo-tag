@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', 'InstaController@login');
-Route::get('/me', 'InstaController@handleProviderCallback');
-Route::post('/search', 'InstaController@search');
+Route::get('login', 'InstaController@login');
+Route::get('me', 'InstaController@handleProviderCallback');
+
+Route::post('search', 'InstaController@search');
