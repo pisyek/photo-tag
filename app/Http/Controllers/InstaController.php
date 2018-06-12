@@ -71,13 +71,15 @@ class InstaController extends Controller
             $client = new Client();
             $response = $client->get($instaMediaUrl, [
                 'query' => [
-                    'access_token' => session('access_token')
+                    'access_token' => session('access_token'),
+                    'count' => 6
                 ]
             ]);
         } catch (ClientException  $e) {
-            return $e->getResponse()->getBody()->getContents();
+            return $e->getResponse();
         }
 
-        return json_decode($response->getBody());
+        $jsonData = json_decode($response->getBody(), true);
+        return view('search', compact('jsonData'));
     }
 }
