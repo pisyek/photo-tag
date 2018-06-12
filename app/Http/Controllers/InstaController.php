@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -34,9 +35,12 @@ class InstaController extends Controller
     public function handleProviderCallback(Request $request)
     {
         try {
-            $state = $request->get('state');
-            $request->session()->put('state', $state);
-            Socialite::driver('instagram')->user();
+            $accessToken = session('access_token');
+            if (!isset($accessToken)) {
+                $state = $request->get('state');
+                $request->session()->put('state', $state);
+                $user = Socialite::driver('instagram')->user();
+            }
         } catch (\Exception $e) {
             return abort(401, 'Unauthorized');
         }
@@ -62,17 +66,18 @@ class InstaController extends Controller
         $keyword = $request->input('keyword');
 
         try {
-            $user = Socialite::driver('instagram')->user();
             $instaMediaUrl = 'https://api.instagram.com/v1/tags/'. $keyword .'/media/recent';
 
             $client = new Client();
             $response = $client->get($instaMediaUrl, [
-                'access_token' => $user->token
+                'query' => [
+                    'access_token' => session('access_token')
+                ]
             ]);
-        } catch (\Exception $e) {
-            return 'error';
+        } catch (ClientException  $e) {
+            return $e->getResponse()->getBody()->getContents();
         }
 
-        return $response->getBody();
+        return json_decode($response->getBody());
     }
 }
