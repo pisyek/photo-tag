@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -75,8 +76,14 @@ class InstaController extends Controller
                     'count' => 6
                 ]
             ]);
-        } catch (ClientException  $e) {
-            return $e->getResponse();
+        } catch (\Exception  $e) {
+            if ($e instanceof ClientException) {
+                return 'Client error';
+            } elseif ($e instanceof ServerException) {
+                return 'Server error';
+            } else {
+                return $e->getResponse();
+            }
         }
 
         $jsonData = json_decode($response->getBody(), true);
