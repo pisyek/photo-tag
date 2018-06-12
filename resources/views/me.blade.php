@@ -24,7 +24,7 @@
 
             <div class="form-row">
                 <div class="col-7">
-                    <input type="text" class="form-control" placeholder="Keyword i.e. pru14">
+                    <input type="text" class="form-control" name="keyword" placeholder="Keyword i.e. pru14">
                 </div>
                 <div class="col-auto">
                     <button type="submit" class="btn btn-primary mb-2">Submit</button>
