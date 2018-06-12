@@ -17,5 +17,5 @@ Route::get('/', function () {
 
 Route::get('login', 'InstaController@login');
 Route::get('me', 'InstaController@handleProviderCallback');
-
+Route::get('search', function(){ return abort(404); });
 Route::post('search', 'InstaController@search');
