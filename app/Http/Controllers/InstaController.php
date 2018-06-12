@@ -61,10 +61,10 @@ class InstaController extends Controller
         // 3. prepare data from endpoint
         // 4. pass to view()
         $this->validate($request, [
-            'keyword' => 'required|alpha_num'
+            'keyword' => 'required'
         ]);
 
-        $keyword = $request->input('keyword');
+        $keyword = str_slug($request->input('keyword'), '');
 
         try {
             $instaMediaUrl = 'https://api.instagram.com/v1/tags/'. $keyword .'/media/recent';
