@@ -36,32 +36,6 @@
         </form>
     </div>
 
-    <div class="row mt-5">
-        <div class="col-md-12">
-            <h2>Top 6 search results:</h2>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-2">
-            <img src="http://via.placeholder.com/200x200" alt="img" class="img-thumbnail">
-        </div>
-        <div class="col-2">
-            <img src="http://via.placeholder.com/200x200" alt="img" class="img-thumbnail">
-        </div>
-        <div class="col-2">
-            <img src="http://via.placeholder.com/200x200" alt="img" class="img-thumbnail">
-        </div>
-        <div class="col-2">
-            <img src="http://via.placeholder.com/200x200" alt="img" class="img-thumbnail">
-        </div>
-        <div class="col-2">
-            <img src="http://via.placeholder.com/200x200" alt="img" class="img-thumbnail">
-        </div>
-        <div class="col-2">
-            <img src="http://via.placeholder.com/200x200" alt="img" class="img-thumbnail">
-        </div>
-    </div>
 </div>
 
 <!-- Optional JavaScript -->
