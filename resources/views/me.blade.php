@@ -19,7 +19,9 @@
         </div>
     </div>
     <div>
-        <form action="#">
+        <form action="{{ url('/search') }}" method="POST">
+            {!! csrf_field() !!}
+
             <div class="form-row">
                 <div class="col-7">
                     <input type="text" class="form-control" placeholder="Keyword i.e. pru14">

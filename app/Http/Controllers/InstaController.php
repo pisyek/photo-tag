@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -33,11 +34,15 @@ class InstaController extends Controller
     public function handleProviderCallback(Request $request)
     {
         try {
-            $state = $request->get('state');
-            $request->session()->put('state', $state);
-            $user = Socialite::driver('instagram')->user();
+            // check if already has state in session
+            if (!$request->session()->get('state')) {
+                if ($request->get('state')) {
+                    $state = $request->get('state');
+                    $request->session()->put('state', $state);
+                }
+            }
         } catch (\Exception $e) {
-            return abort(401, 'invalid request');
+            return abort(401, 'Unauthorized');
         }
         return view('me');
     }
@@ -46,6 +51,7 @@ class InstaController extends Controller
      * Perform search by keyword
      *
      * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function search(Request $request)
     {
@@ -53,5 +59,24 @@ class InstaController extends Controller
         // 2. call end-point search
         // 3. prepare data from endpoint
         // 4. pass to view()
+        $this->validate($request, [
+            'keyword' => 'required'
+        ]);
+
+        $keyword = $request->input('keyword');
+
+        try {
+            $user = Socialite::driver('instagram')->user();
+            $instaMediaUrl = 'https://api.instagram.com/v1/tags/'. $keyword .'/media/recent';
+
+            $client = new Client();
+            $response = $client->get($instaMediaUrl, [
+                'access_token' => $user->token
+            ]);
+        } catch (\Exception $e) {
+            return abort(404);
+        }
+
+        return $response->getBody();
     }
 }
