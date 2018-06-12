@@ -80,6 +80,6 @@ class InstaController extends Controller
         }
 
         $jsonData = json_decode($response->getBody(), true);
-        return view('search', compact('jsonData'));
+        return view('search', compact('jsonData', 'keyword'));
     }
 }

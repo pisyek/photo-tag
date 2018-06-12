@@ -38,7 +38,7 @@
 
     <div class="row mt-5">
         <div class="col-md-12">
-            <h2>Top {{ count($jsonData['data'])  }}} search results:</h2>
+            <h2>Top {{ count($jsonData['data'])  }} search results ({{ $keyword }}):</h2>
         </div>
     </div>
 
