@@ -60,7 +60,7 @@ class InstaController extends Controller
         // 3. prepare data from endpoint
         // 4. pass to view()
         $this->validate($request, [
-            'keyword' => 'required'
+            'keyword' => 'required|alpha_num'
         ]);
 
         $keyword = $request->input('keyword');
